@@ -97,6 +97,9 @@ class Panel extends Component {
                       window.navigator.clipboard.writeText(link).then(() => {
                         this.setState({copied: "Copied to Clipboard!"})
 
+                      }).catch(() => {
+                        this.setState({copied: "Copied to Clipboard!"})
+
                       })
                   } else {
                     this.setState({copied: "Cannot copy, please copy the link manually!"})
