@@ -104,7 +104,7 @@ class Panel extends Component {
                   }
                   setTimeout(() => {
                       this.setState({copied: "false"})
-                  })
+                  }, 4000)
                 }}
               />
               {this.state.copied !== "false" && (<p>{this.state.copied}</p>)}

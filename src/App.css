@@ -27,7 +27,11 @@ body {
   font-size: 14px;
 }
 .panel-header p {
-  margin: 0;
+
+  margin: 0 5px;
+  text-decoration: none;
+  color: #818e8e;
+  font-size: 14px;
 }
 .panel-header select {
   border: none;
