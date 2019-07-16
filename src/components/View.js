@@ -69,13 +69,14 @@ export default class View extends Component {
       const { data } = response;
       if (data.success) {
         this.setState({ newPaste: false, id: data.id }, () => {
+            window.history.pushState(null, "Gist", `/view/${data.id}`)
           this.editor.updateOptions({ readOnly: true });
         });
       }
     });
   };
   copyGist = () => {
-        this.setState({newPaste: true, id: null}, () => {
+        this.setState({newPaste: true, id: null, language: this.editor.getModel().getModeId()}, () => {
             window.history.pushState(null, "Gist", "/")
             this.editor.updateOptions({ readOnly: false });
 
