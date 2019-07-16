@@ -1,0 +1,17 @@
+version: '3'
+
+# Define the services/containers to be run
+services:
+  app: #name of your service
+    build: ./ # specify the directory of the Dockerfile
+    restart: always
+    container_name: opengist
+    ports:
+      - "127.0.0.1:3012:3000" #specify ports forwarding
+    links:
+      - database # link this service to the database service
+    depends_on:
+      - database
+
+  database: # name of the service
+    image: mongo # specify image to build container from
