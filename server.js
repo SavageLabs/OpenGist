@@ -37,6 +37,7 @@ cluster.on('exit', (worker, code, signal) => {
         app.get("/raw-display/:id", (request, response) => {
             const { id } = request.params;
             dbApi.getPaste(id).then(paste => {
+                response.set("Content-type", "text/plain")
                 response.send(paste.content);
             }).catch(err => {
                 response.send("")
