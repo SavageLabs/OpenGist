@@ -1,5 +1,7 @@
 # OpenGist
-OpenGist is a free software pastebin service. Its textview is based on monaco, storage is provided by a mongodb server, this is a mono app, everything is in one program; The Frontend was build using react
+OpenGist is a free software pastebin service. Its textview is based on monaco, storage is provided by a mongodb server, this is a mono app, everything is in one program. The Frontend was build using react.
+
+[Public usable instance](https://paste.savagellc.net)
 
 
 
