@@ -66,59 +66,50 @@ class Panel extends Component {
   render() {
     const { newPaste, currentLanguage, id } = this.props;
     const link = id && `https://${window.location.host}/view/${id}`;
-    if (newPaste)
-      return (
-        <div className="panel-header"
+    const content = newPaste ? ( <React.Fragment> <div>
+        <button onClick={() => this.props.savePaste()}>SAVE</button>
+      </div>
+      <div>
+        <select
+          value={currentLanguage}
+          onChange={ev => {
+            this.props.updateLanguage(ev.target.value);
+          }}
+          class="language-picker"
         >
-          <div>
-            <button onClick={() => this.props.savePaste()}>SAVE</button>
-          </div>
-          <div>
-            <select
-              value={currentLanguage}
-              onChange={ev => {
-                this.props.updateLanguage(ev.target.value);
-              }}
-              class="language-picker"
-            >
-              {langs.map((lang, i) => (
-                <option key={i} value={lang}>
-                  {lang}
-                </option>
-              ))}
-            </select>
-          </div>
-          {id && (
-            <div style={{ display: "flex" }}>
-              <a href={link}>{link}</a>
-              <button
-                onClick={() => {
-                  if (window.navigator.clipboard) {
-                      window.navigator.clipboard.writeText(link).then(() => {
-                        this.setState({copied: "Copied to Clipboard!"})
+          {langs.map((lang, i) => (
+            <option key={i} value={lang}>
+              {lang}
+            </option>
+          ))}
+        </select>
+      </div>
+      {id && (
+        <div style={{ display: "flex" }}>
+          <a href={link}>{link}</a>
+          <button
+            onClick={() => {
+              if (window.navigator.clipboard) {
+                  window.navigator.clipboard.writeText(link).then(() => {
+                    this.setState({copied: "Copied to Clipboard!"})
 
-                      }).catch(() => {
-                        this.setState({copied: "Copied to Clipboard!"})
+                  }).catch(() => {
+                    this.setState({copied: "Copied to Clipboard!"})
 
-                      })
-                  } else {
-                    this.setState({copied: "Cannot copy, please copy the link manually!"})
+                  })
+              } else {
+                this.setState({copied: "Cannot copy, please copy the link manually!"})
 
-                  }
-                  setTimeout(() => {
-                      this.setState({copied: "false"})
-                  }, 4000)
-                }}
-              />
-              {this.state.copied !== "false" && (<p>{this.state.copied}</p>)}
-            </div>
-          )}
+              }
+              setTimeout(() => {
+                  this.setState({copied: "false"})
+              }, 4000)
+            }}
+          />
+          {this.state.copied !== "false" && (<p>{this.state.copied}</p>)}
         </div>
-      );
-    return (
-      <div
-      className="panel-header" >
-            <div>
+      )}</React.Fragment>) : (<React.Fragment>
+           <div>
                 <button onClick={() => {
                     this.props.history.push("/");
                 }}>New</button>
@@ -129,27 +120,46 @@ class Panel extends Component {
                 }}>Copy</button>
             </div>
             {id && (
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", flexWrap: "wrap" }}>
               <a href={link}>Paste Id: {id}</a>
               <button
                 onClick={() => {
                   if (window.navigator.clipboard) {
                       window.navigator.clipboard.writeText(link).then(() => {
-                        this.setState({copied: "Copied to Clipboard!"})
+                        this.setState({copied: "Copied to Clipboard!"}, () => {
+                            setTimeout(() => {
+                                this.setState({copied: "false"})
+                            }, 5000)
+                        })
 
+                      }).catch(err => {
+                        this.setState({copied: "Failed to copy, please copy manually!"}, () => {
+                            setTimeout(() => {
+                                this.setState({copied: "false"})
+                            }, 5000)
+                        })
                       })
                   } else {
-                    this.setState({copied: "Cannot copy, please copy the link manually!"})
-
+                    this.setState({copied: "Failed to copy, please copy manually!"}, () => {
+                        setTimeout(() => {
+                            this.setState({copied: "false"})
+                        }, 5000)
+                    })
                   }
-                  setTimeout(() => {
-                      this.setState({copied: "false"})
-                  })
+              
                 }}
-              >Copy link to clipboard</button>
-              {this.state.copied !== "false" && (<p>{this.state.copied}</p>)}
+              >{this.state.copied === "false" ? "Copy link to clipboard" : this.state.copied}</button>
             </div>
           )}
+      </React.Fragment>)
+
+    return (
+      <div
+      className="panel-header" >
+        <div style={{display: 'flex', flexWrap: "wrap"}}>
+        {content}
+        </div>
+         <img className={"logo-img"} src={require("../assets/logo.png")} alt="logo"/>
       </div>
     );
   }

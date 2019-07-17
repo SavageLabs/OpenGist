@@ -93,7 +93,7 @@ export default class View extends Component {
           display: "flex",
           flexDirection: "column",
           width: "100vw",
-          height: "100vh"
+          height: "100vh",
         }}
       >
         <Panel
