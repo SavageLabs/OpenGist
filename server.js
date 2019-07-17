@@ -34,6 +34,15 @@ cluster.on('exit', (worker, code, signal) => {
 
             })
         })
+        app.get("/raw-display/:id", (request, response) => {
+            const { id } = request.params;
+            dbApi.getPaste(id).then(paste => {
+                response.send(paste.content);
+            }).catch(err => {
+                response.send("")
+
+            })
+        })
         app.post("/api/add", (request, response) => {
           const { language, content } = request.body;
           dbApi.addPaste(language, content).then(id => {

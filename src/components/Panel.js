@@ -119,6 +119,11 @@ class Panel extends Component {
                     this.props.copyGist()
                 }}>Copy</button>
             </div>
+            <div>
+                <button onClick={() => {
+                    window.open(`https://${window.location.host}/raw-display/${id}`, "_blank")
+                }}>View Raw</button>
+            </div>
             {id && (
             <div style={{ display: "flex", flexWrap: "wrap" }}>
               <a href={link}>Paste Id: {id}</a>
