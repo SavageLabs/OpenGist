@@ -3,7 +3,7 @@ version: '3'
 # Define the services/containers to be run
 services:
   app: #name of your service
-    image: test:cicd # specify the directory of the Dockerfile
+    build: ./ # specify the directory of the Dockerfile
     restart: always
     container_name: opengist
     ports:
