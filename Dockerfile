@@ -1,22 +1,41 @@
-FROM node:latest
+# Decreased image size = Faster deploy. Master Node.
+FROM node:current-slim AS base
 
 # Create app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY server.json ./package.json
+# This files won't be needed until later
+COPY ["./database", "./database"]
 
-RUN npm install
-#RUN npm ci --only=production
-# If you are building your code for production
-# RUN npm ci --only=production
-
-# Bundle app source
-COPY ./build ./build
-COPY ./database ./database
-COPY ./server.js ./server.js
-
+# Cached Step = Faster image build
 EXPOSE 3000
+
+# Build the project before releasing
+FROM node:current-slim AS build
+
+# Switch towards a safe directory
+WORKDIR /usr/src/temp
+
+# Copy needed files for building
+COPY ["./LICENSE", "./"]
+COPY ["./public", "./public"]
+COPY ["./package.json", "yarn.lock", "./"]
+COPY ["./src", "./src"]
+
+# Auto build the project
+RUN npm install && npm install yarn && yarn build
+
+# Use the Master Node for releasing
+FROM base AS release
+WORKDIR /usr/src/app
+
+# Set the production context files
+COPY ["./context/", "./"]
+
+# Install production dependencies
+RUN ["npm", "install"]
+
+# Copy built project
+COPY --from=build /usr/src/temp/build ./build
+
 CMD [ "npm", "start" ]

@@ -64,8 +64,10 @@ class Panel extends Component {
         copied: "false"
     }
   render() {
+    /** The FQDN of the current host and http schema. */
+    const fqdn = `${window.location.protocol}://${window.location.host}`;
     const { newPaste, currentLanguage, id } = this.props;
-    const link = id && `https://${window.location.host}/view/${id}`;
+    const link = id && `${fqdn}/view/${id}`;
     const content = newPaste ? ( <React.Fragment> <div>
         <button onClick={() => this.props.savePaste()}>SAVE</button>
       </div>
@@ -121,7 +123,7 @@ class Panel extends Component {
             </div>
             <div>
                 <button onClick={() => {
-                    window.open(`https://${window.location.host}/raw-display/${id}`, "_blank")
+                    window.open(`${fqdn}/raw-display/${id}`, "_blank")
                 }}>View Raw</button>
             </div>
             {id && (
