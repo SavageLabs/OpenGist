@@ -123,7 +123,7 @@ class Panel extends Component {
             </div>
             <div>
                 <button onClick={() => {
-                    window.open(`${fqdn}/raw-display/${id}`, "_blank")
+                    window.open(`/raw-display/${id}`, "_blank")
                 }}>View Raw</button>
             </div>
             {id && (
