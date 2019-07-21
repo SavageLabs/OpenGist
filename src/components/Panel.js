@@ -67,7 +67,7 @@ class Panel extends Component {
     /** The FQDN of the current host and http schema. */
     const fqdn = `${window.location.protocol}://${window.location.host}`;
     const { newPaste, currentLanguage, id } = this.props;
-    const link = id && `${fqdn}/view/${id}`;
+    const link = id && `/view/${id}`;
     const content = newPaste ? ( <React.Fragment> <div>
         <button onClick={() => this.props.savePaste()}>SAVE</button>
       </div>
