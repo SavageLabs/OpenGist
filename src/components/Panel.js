@@ -132,7 +132,7 @@ class Panel extends Component {
               <button
                 onClick={() => {
                   if (window.navigator.clipboard) {
-                      window.navigator.clipboard.writeText(link).then(() => {
+                      window.navigator.clipboard.writeText(fqdn + link).then(() => {
                         this.setState({copied: "Copied to Clipboard!"}, () => {
                             setTimeout(() => {
                                 this.setState({copied: "false"})
