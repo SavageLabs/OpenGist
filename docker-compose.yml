@@ -8,15 +8,5 @@ services:
     container_name: opengist
     ports:
       - "127.0.0.1:3012:3000" #specify ports forwarding
-    # Link is deprecated, you can rely on depends_on
-    # links:
-    #  - database # link this service to the database service
-    depends_on:
-      - database
-
-  database: # name of the service
-    container_name: opengist-db
-    image: mongo # specify image to build container from
-    # Persist data on host's file system
-    volumes:
-      - ~/OpenGistData:/data/db
+   env_file: 
+      - prod.env   
